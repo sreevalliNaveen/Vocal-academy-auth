@@ -8,16 +8,22 @@ export default function Login() {
 
   const from = location.state?.from?.pathname || "/dashboard";
 
-  const handleLogin = () => {
+  const handleLogin = (user) => {
     login({
       id: "1",
       name: "Valli",
-      role: "student",
+      role: user? user : "",
       token: "dummy-jwt-token",
     });
 
     navigate(from, { replace: true });
   };
 
-  return <button onClick={handleLogin}>Login</button>;
+  return (
+  <>
+    <button onClick={() => handleLogin("student")}>Login as Student</button>
+    <button onClick={() => handleLogin("admin")}>Login as Admin</button>
+    <button onClick={() => handleLogin("director")}>Login as Director</button>
+  </>
+  );
 }
