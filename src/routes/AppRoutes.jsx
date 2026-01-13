@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import Unauthorized from "../pages/Unauthorized";
 import AdminPanel from "../pages/admin/AdminPanel";
 import DirectorPanel from "../pages/director/DirectorPanel";
+import Layout from "../components/Layout";
 
 
 export default function AppRoutes() {
@@ -15,16 +16,23 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       
-      <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+      <Route element={<ProtectedRoute allowedRoles={["student","admin","director"]} />}>
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
       </Route>
 
+
       <Route element={<ProtectedRoute allowedRoles={["director"]} />}>
-        <Route path="/director" element={<DirectorPanel />} />
+        <Route element={<Layout />}>
+          <Route path="/director" element={<DirectorPanel />} />
+        </Route>
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={["admin","director"]} />}>
-        <Route path="/admin" element={<AdminPanel />} />
+        <Route element={<Layout />}>
+          <Route path="/admin" element={<AdminPanel />} />
+        </Route>
       </Route>
       </Routes>
   );

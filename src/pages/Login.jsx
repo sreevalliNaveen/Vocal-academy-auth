@@ -4,9 +4,9 @@ import { useAuth } from "../auth/AuthContext";
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/dashboard";
+  // const from = location.state?.from?.pathname || "/dashboard";
 
   const handleLogin = (user) => {
     login({
@@ -16,7 +16,7 @@ export default function Login() {
       token: "dummy-jwt-token",
     });
 
-    navigate(from, { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   return (
