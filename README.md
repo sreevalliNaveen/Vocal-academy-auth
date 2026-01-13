@@ -1,16 +1,141 @@
-# React + Vite
+# Vocal Music Academy – React Auth & Authorization App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## App Overview
 
-Currently, two official plugins are available:
+This is a React single-page application (SPA) built to demonstrate **authentication, authorization, and protected routing** in a realistic way.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The app represents a **Classical Vocal Music Academy** with different users:
 
-## React Compiler
+* Public visitors
+* Students
+* Admins
+* Director
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Each user sees different pages based on who they are and what they are allowed to do.
 
-## Expanding the ESLint configuration
+The focus of this project is good logic, correct React patterns, and interview-ready architecture ,not ui polish.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Roles & Permissions
+
+The app uses role-based + permission-based authorization.
+
+### Roles
+
+* **DIRECTOR** – full access
+* **ADMIN** – manages users and academy data
+* **STUDENT** – limited access
+* **PUBLIC** – no login required
+
+### Permissions
+
+Instead of checking roles everywhere, the app defines permissions like:
+
+* View admin dashboard
+* Manage users
+* Approve admissions
+
+Each role is mapped to a set of permissions in one central file.
+
+This makes the system:
+
+* Easy to scale
+* Easy to explain in interviews
+* Easy to maintain
+
+---
+
+## Authentication Flow
+
+1. User logs in using a dummy login page
+2. App generates a **mock JWT token** and user info
+3. Token and user data are stored in **localStorage**
+4. On page refresh, auth state is restored from localStorage
+5. User stays logged in until logout
+
+There is no real backend — authentication is simulated to focus on frontend logic.
+
+---
+
+## Route Protection Strategy
+
+The app uses a custom **ProtectedRoute** component.
+
+### What it checks
+
+1. Is the user logged in?
+2. Does the user have the required permission?
+
+### Behavior
+
+* Not logged in → redirect to `/login`
+* Logged in but unauthorized → redirect to `/unauthorized`
+* Authorized → allow access
+
+Protected routes also support:
+
+* Nested routes
+* Page refresh without losing access
+
+---
+
+## API Simulation
+
+The app simulates APIs using:
+
+* Dummy async functions
+* `setTimeout` to mimic network delay
+* Token checks before returning data
+
+This helps demonstrate:
+
+* Loading states
+* Error handling
+* How JWT tokens are usually sent and validated
+
+---
+
+## Performance Decisions
+
+The app includes basic performance optimizations:
+
+* **React.memo** – prevents unnecessary re-renders
+* **useCallback** – stabilizes function references
+* **Lazy loading** – admin pages load only when needed
+
+These optimizations are applied only where they make sense, not blindly.
+
+---
+
+## Why This Project Matters
+
+This project was built to:
+
+* Practice real-world React patterns
+* Understand auth deeply, not just copy code
+* Be able to clearly explain decisions in interviews
+
+Every feature in this app is intentional and explainable.
+
+---
+
+## Tech Stack
+
+* React
+* React Router
+* Context API
+* JavaScript (ES6+)
+
+---
+
+## How to Run
+
+```bash
+npm install
+npm start
+```
+
+---
+
+This project is meant for **learning, interviews, and portfolio demonstration**, not production deployment.
