@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { useAuth } from "../auth/AuthContext";
 
 const menuByRole = {
@@ -34,4 +34,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default React.memo(Navbar);
